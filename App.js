@@ -3,8 +3,12 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset, useAssets } from "expo-asset";
-import { View, StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { View, StyleSheet, useColorScheme } from "react-native";
+import {
+  NavigationContainer,
+  DarkTheme,
+  DefaultTheme,
+} from "@react-navigation/native";
 import Tabs from "./navigation/Tab";
 
 SplashScreen.preventAutoHideAsync();
@@ -49,6 +53,8 @@ export default function App() {
   //   prepare();
   // }, []);
 
+  const isDark = useColorScheme() === "dark";
+
   const [fontsLoaded] = useFonts(Ionicons.font);
 
   const [assets] = useAssets([require("./my-face.jpeg")]);
@@ -62,7 +68,10 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer onReady={onLayoutRootView}>
+    <NavigationContainer
+      onReady={onLayoutRootView}
+      // theme={isDark ? DarkTheme : DefaultTheme}
+    >
       <Tabs />
     </NavigationContainer>
   );

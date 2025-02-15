@@ -3,6 +3,7 @@ import Movies from "../screens/Movies";
 import Tv from "../screens/Tv";
 import Search from "../screens/Search";
 import { useColorScheme } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import {
   BLACK_COLOR,
   DARK_GREY_COLOR,
@@ -27,11 +28,51 @@ export default function Tabs() {
         headerTitleStyle: {
           color: isDark ? "white" : BLACK_COLOR,
         },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "600",
+        },
       }}
     >
-      <Tab.Screen name="Movies" component={Movies} />
-      <Tab.Screen name="Tv" component={Tv} />
-      <Tab.Screen name="Search" component={Search} />
+      <Tab.Screen
+        name="Movies"
+        component={Movies}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "film" : "film-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Tv"
+        component={Tv}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "tv" : "tv-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Search}
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons
+              name={focused ? "search" : "search-outline"}
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
