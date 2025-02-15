@@ -40,10 +40,15 @@ const NativeStack = createNativeStackNavigator();
 const Stack = () => {
   return (
     <NativeStack.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         headerBackButtonDisplayMode: "minimal",
-        presentation: "modal",
-      }}
+        headerLeft: () =>
+          navigation.canGoBack() ? (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={{ marginLeft: 10 }}>Back</Text>
+            </TouchableOpacity>
+          ) : null,
+      })}
     >
       <NativeStack.Screen
         options={{

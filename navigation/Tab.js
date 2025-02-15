@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Movies from "../screens/Movies";
 import Tv from "../screens/Tv";
 import Search from "../screens/Search";
-import { useColorScheme } from "react-native";
+import { Text, TouchableOpacity, useColorScheme } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   BLACK_COLOR,
@@ -16,7 +16,7 @@ export default function Tabs() {
   const isDark = useColorScheme() === "dark";
   return (
     <Tab.Navigator
-      screenOptions={{
+      screenOptions={({ navigation }) => ({
         tabBarStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
         },
@@ -32,7 +32,13 @@ export default function Tabs() {
           fontSize: 12,
           fontWeight: "600",
         },
-      }}
+        headerLeft: () =>
+          navigation.canGoBack() ? (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <Text style={{ marginLeft: 10 }}>Back</Text>
+            </TouchableOpacity>
+          ) : null,
+      })}
     >
       <Tab.Screen
         name="Movies"
