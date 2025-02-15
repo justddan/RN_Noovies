@@ -39,8 +39,19 @@ const NativeStack = createNativeStackNavigator();
 
 const Stack = () => {
   return (
-    <NativeStack.Navigator>
-      <NativeStack.Screen name="ScreenOne" component={ScreenOne} />
+    <NativeStack.Navigator
+      screenOptions={{
+        headerBackButtonDisplayMode: "minimal",
+        presentation: "modal",
+      }}
+    >
+      <NativeStack.Screen
+        options={{
+          title: "1",
+        }}
+        name="ScreenOne"
+        component={ScreenOne}
+      />
       <NativeStack.Screen name="ScreenTwo" component={ScreenTwo} />
       <NativeStack.Screen name="ScreenThree" component={ScreenThree} />
     </NativeStack.Navigator>
