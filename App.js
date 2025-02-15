@@ -12,6 +12,8 @@ import {
 import Tabs from "./navigation/Tab";
 import Stack from "./navigation/Stack";
 import Root from "./navigation/Root";
+import { darkTheme, lightTheme } from "./styled";
+import { ThemeProvider } from "styled-components";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -56,9 +58,9 @@ export default function App() {
   // }, []);
 
   const isDark = useColorScheme() === "dark";
+  const theme = isDark ? darkTheme : lightTheme;
 
   const [fontsLoaded] = useFonts(Ionicons.font);
-
   const [assets] = useAssets([require("./my-face.jpeg")]);
 
   const onLayoutRootView = useCallback(async () => {
@@ -70,11 +72,13 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer
-      onReady={onLayoutRootView}
-      // theme={isDark ? DarkTheme : DefaultTheme}
-    >
-      <Root />
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer
+        onReady={onLayoutRootView}
+        // theme={isDark ? DarkTheme : DefaultTheme}
+      >
+        <Root />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 }
