@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
-import * as Font from "expo-font";
+import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset, useAssets } from "expo-asset";
 import { Text, View } from "react-native";
@@ -47,14 +47,9 @@ export default function App() {
   //   prepare();
   // }, []);
 
-  const [fontsLoaded] = Font.useFonts({
-    Ionicons: Ionicons.font,
-  });
+  const [fontsLoaded] = useFonts(Ionicons.font);
 
-  const [assets] = useAssets([
-    require("./my-face.jpeg"),
-    "https://picsum.photos/200/300",
-  ]);
+  const [assets] = useAssets([require("./my-face.jpeg")]);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded && assets) await SplashScreen.hideAsync();
