@@ -3,7 +3,9 @@ import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { Asset, useAssets } from "expo-asset";
-import { Text, View } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import Tabs from "./navigation/Tab";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -60,8 +62,8 @@ export default function App() {
   }
 
   return (
-    <View onLayout={onLayoutRootView}>
-      <Text>We are done Loading !</Text>
-    </View>
+    <NavigationContainer onReady={onLayoutRootView}>
+      <Tabs />
+    </NavigationContainer>
   );
 }
