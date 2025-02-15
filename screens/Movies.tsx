@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components/native";
 import { View, Text, TouchableOpacity } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
 const Container = styled.View`
   flex: 1;
@@ -11,8 +12,9 @@ const Container = styled.View`
 const Title = styled.Text`
   font-size: 30px;
   font-weight: 600;
-  color: ${({ selected }) => (selected ? "red" : "black")};
-  background-color: ${({ theme }) => theme.mainBgColor};
+  color: ${({ selected }: { selected: boolean }) =>
+    selected ? "red" : "black"};
+  background-color: ${({ theme }: { theme: any }) => theme.mainBgColor};
 `;
 
 const Header = styled.View``;
@@ -20,12 +22,14 @@ const Header = styled.View``;
 const Column = styled.View``;
 const Footer = styled.View``;
 
-const Movies = ({ navigation: { navigate } }) => {
+const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = ({
+  navigation,
+}) => {
   return (
     <Header>
       <Column>
         <TouchableOpacity
-          onPress={() => navigate("Stack", { screen: "ScreenOne" })}
+          onPress={() => navigation.navigate("Stack", { screen: "ScreenOne" })}
         >
           <Title selected={true}>Movies</Title>
         </TouchableOpacity>
