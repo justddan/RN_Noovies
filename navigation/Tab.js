@@ -35,12 +35,12 @@ export default function Tabs() {
           fontSize: 12,
           fontWeight: "600",
         },
-        headerLeft: () =>
-          navigation.canGoBack() ? (
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text style={{ marginLeft: 10 }}>Back</Text>
-            </TouchableOpacity>
-          ) : null,
+        // headerLeft: () =>
+        //   navigation.canGoBack() ? (
+        //     <TouchableOpacity onPress={() => navigation.goBack()}>
+        //       <Text style={{ marginLeft: 10 }}>Back</Text>
+        //     </TouchableOpacity>
+        //   ) : null,
       })}
     >
       <Tab.Screen
