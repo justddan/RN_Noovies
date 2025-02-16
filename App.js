@@ -2,20 +2,17 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as SplashScreen from "expo-splash-screen";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-import { Asset, useAssets } from "expo-asset";
-import { View, StyleSheet, useColorScheme } from "react-native";
-import {
-  NavigationContainer,
-  DarkTheme,
-  DefaultTheme,
-} from "@react-navigation/native";
-import Tabs from "./navigation/Tab";
-import Stack from "./navigation/Stack";
+import { useAssets } from "expo-asset";
+import { useColorScheme } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 import Root from "./navigation/Root";
 import { darkTheme, lightTheme } from "./styled";
 import { ThemeProvider } from "styled-components";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient();
 
 // const loadFonts = (fonts) => {
 //   return fonts.map((font) => Font.loadAsync(font));
@@ -72,13 +69,15 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <NavigationContainer
-        onReady={onLayoutRootView}
-        // theme={isDark ? DarkTheme : DefaultTheme}
-      >
-        <Root />
-      </NavigationContainer>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer
+          onReady={onLayoutRootView}
+          // theme={isDark ? DarkTheme : DefaultTheme}
+        >
+          <Root />
+        </NavigationContainer>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 }

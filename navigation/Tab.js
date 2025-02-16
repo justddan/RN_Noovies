@@ -17,6 +17,7 @@ export default function Tabs() {
   return (
     <Tab.Navigator
       screenOptions={({ navigation }) => ({
+        unmountOnBlur: true,
         sceneStyle: {
           backgroundColor: isDark ? BLACK_COLOR : "white",
         },
