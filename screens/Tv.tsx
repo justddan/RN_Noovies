@@ -1,11 +1,50 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { RefreshControl, ScrollView } from "react-native";
+import { useQuery, useQueryClient } from "react-query";
+import { tvApi } from "../api";
+import Loader from "../components/Loader";
+import HList from "../components/HList";
 
-const Tv = () => {
+const Tv: React.FC = () => {
+  const queryClient = useQueryClient();
+  const {
+    isLoading: todayLoading,
+    data: todayData,
+    isRefetching: todayRefetching,
+  } = useQuery(["tv", "today"], tvApi.airingToday);
+  const {
+    isLoading: topLoading,
+    data: topData,
+    isRefetching: topRefetching,
+  } = useQuery(["tv", "top"], tvApi.topRated);
+  const {
+    isLoading: trendingLoading,
+    data: trendingData,
+    isRefetching: trendingRefetching,
+  } = useQuery(["tv", "trending"], tvApi.trending);
+
+  const loading = todayLoading || topLoading || trendingLoading;
+  const refreshing = todayRefetching || topRefetching || trendingRefetching;
+
+  const onRefresh = () => {
+    queryClient.refetchQueries(["tv"]);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Tv</Text>
-    </View>
+    <ScrollView
+      contentContainerStyle={{ paddingVertical: 30 }}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+    >
+      <HList title="Trending TV" data={trendingData.results} />
+      <HList title="Airing Today" data={todayData.results} />
+      <HList title="Top Rated TV" data={topData.results} />
+    </ScrollView>
   );
 };
 

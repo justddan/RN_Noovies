@@ -9,18 +9,18 @@ import VMedia from "../components/VMedia";
 import HMedia from "../components/HMedia";
 import { useQuery, useQueryClient } from "react-query";
 import { Movie, MovieResponse, moviesApi } from "../api";
+import Loader from "../components/Loader";
+import HList from "../components/HList";
 
 const API_KEY = "fec442424b0d4ae084e35e7b48cab4c6";
 
 const Container = styled.ScrollView``;
 
-const Loader = styled.View`
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
 const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const ListContainer = styled.View`
+  margin-bottom: 40px;
+`;
 
 const ListTitle = styled.Text`
   /* color: white; */
@@ -31,10 +31,6 @@ const ListTitle = styled.Text`
 
 const TrendingScroll = styled.FlatList`
   margin-top: 20px;
-`;
-
-const ListContainer = styled.View`
-  margin-bottom: 40px;
 `;
 
 const ComingSoonTitle = styled(ListTitle)`
@@ -54,19 +50,16 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   const {
     isLoading: nowPlayingLoading,
     data: nowPlayingData,
-    refetch: refetchNowPlaying,
     isRefetching: isRefetchingNowPlaying,
   } = useQuery<MovieResponse>(["movies", "nowPlaying"], moviesApi.nowPlaying);
   const {
     isLoading: upcomingLoading,
     data: upcomingData,
-    refetch: refetchUpcoming,
     isRefetching: isRefetchingUpcoming,
   } = useQuery<MovieResponse>(["movies", "upcoming"], moviesApi.upcoming);
   const {
     isLoading: trendingLoading,
     data: trendingData,
-    refetch: refetchTrending,
     isRefetching: isRefetchingTrending,
   } = useQuery<MovieResponse>(["movies", "trending"], moviesApi.trending);
 
@@ -101,9 +94,7 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
   // console.log(Object.keys(nowPlayingData?.results[0]).map((v) => typeof v));
 
   return loading ? (
-    <Loader>
-      <ActivityIndicator />
-    </Loader>
+    <Loader />
   ) : (
     upcomingData && (
       <FlatList
@@ -137,20 +128,9 @@ const Movies: React.FC<NativeStackScreenProps<any, "Movies">> = () => {
                 />
               ))}
             </Swiper>
-            <ListContainer>
-              <ListTitle>Trending Movies</ListTitle>
-              {trendingData && (
-                <TrendingScroll
-                  data={trendingData.results}
-                  keyExtractor={movieKeyExtractor}
-                  renderItem={renderVMedia}
-                  ItemSeparatorComponent={VSeparator}
-                  contentContainerStyle={{ paddingHorizontal: 30 }}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                />
-              )}
-            </ListContainer>
+            {trendingData ? (
+              <HList title="Trending Movies" data={trendingData.results} />
+            ) : null}
             <ComingSoonTitle>Coming soon</ComingSoonTitle>
           </>
         }
