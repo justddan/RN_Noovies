@@ -9,6 +9,7 @@ const Root = () => {
   return (
     <Nav.Navigator
       screenOptions={{
+        presentation: "modal",
         headerShown: false,
       }}
     >

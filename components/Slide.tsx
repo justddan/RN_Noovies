@@ -9,6 +9,7 @@ import { makeImgPath } from "../util";
 import { BlurView } from "expo-blur";
 import Poster from "./Poster";
 import { useNavigation } from "@react-navigation/native";
+import { Movie } from "../api";
 
 const View = styled.View`
   flex: 1;
@@ -50,6 +51,7 @@ interface SlideProps {
   originalTitle: string;
   voteAverage: number;
   overview: string;
+  fullData: Movie;
 }
 
 const Slide: React.FC<SlideProps> = ({
@@ -58,6 +60,7 @@ const Slide: React.FC<SlideProps> = ({
   originalTitle,
   voteAverage,
   overview,
+  fullData,
 }) => {
   const isDark = useColorScheme() === "dark";
   const navigation = useNavigation();
@@ -66,7 +69,7 @@ const Slide: React.FC<SlideProps> = ({
     navigation.navigate("Stack", {
       screen: "Detail",
       params: {
-        originalTitle,
+        ...fullData,
       },
     });
   };
