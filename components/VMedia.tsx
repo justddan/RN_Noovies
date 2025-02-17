@@ -28,8 +28,12 @@ const VMedia: React.FC<VMediaProps> = ({
 }) => {
   const navigation = useNavigation();
   const goToDetail = () => {
+    // @ts-ignore
     navigation.navigate("Stack", {
       screen: "Detail",
+      params: {
+        originalTitle,
+      },
     });
   };
 
